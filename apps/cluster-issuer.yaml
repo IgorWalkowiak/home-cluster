@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/IgorWalkowiak/argo-apps
-    targetRevision: main
+    targetRevision: master
     path: manifests/cluster-issuer
   destination:
     server: https://kubernetes.default.svc
