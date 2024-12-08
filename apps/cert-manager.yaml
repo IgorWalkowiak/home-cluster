@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://charts.bitnami.com/bitnami
     chart: cert-manager
-    targetRevision: 1.3.23
+    targetRevision: 1.3.22
   destination:
     server: https://kubernetes.default.svc
     namespace: admin
