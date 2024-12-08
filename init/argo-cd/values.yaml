@@ -6,3 +6,6 @@ repoServer:
     requests:
       cpu: "200m"
       memory: "128Mi"
+controller:
+  extraArgs:
+  - --application-namespaces=*
