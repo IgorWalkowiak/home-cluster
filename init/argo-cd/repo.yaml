@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: home-cluster-repo
+  labels:
+    argocd.argoproj.io/secret-type: repository
+data:
+  name: aG9tZS1jbHVzdGVy
+  url: aHR0cHM6Ly9naXRodWIuY29tL0lnb3JXYWxrb3dpYWsvaG9tZS1jbHVzdGVy
+type: Opaque
