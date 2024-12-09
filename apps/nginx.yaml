@@ -15,7 +15,7 @@ spec:
           type: ClusterIP
         ingress:
           enabled: true
-          hostname: nginx.local
+          hostname: iwal.duckdns.org
           path: /
           pathType: ImplementationSpecific
           tls: false
