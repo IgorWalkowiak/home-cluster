@@ -25,7 +25,8 @@ spec:
           tls: true
           extraTls:
             - hosts:
-                - iwal.duckdns.org
+              - iwal.duckdns.org
+              secretName: nginx-cert
   destination:
     server: https://kubernetes.default.svc
     namespace: default
