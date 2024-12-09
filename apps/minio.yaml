@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://charts.bitnami.com/bitnami
     chart: minio
-    targetRevision: 14.8.6
+    targetRevision: 14.8.2
   destination:
     server: https://kubernetes.default.svc
     namespace: admin
