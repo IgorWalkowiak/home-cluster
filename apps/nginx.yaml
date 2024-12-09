@@ -9,6 +9,16 @@ spec:
     repoURL: https://charts.bitnami.com/bitnami
     chart: nginx
     targetRevision: 18.2.0
+    helm:
+      values: |
+        service:
+          type: ClusterIP
+        ingress:
+          enabled: true
+          hostname: nginx.local
+          path: /
+          pathType: ImplementationSpecific
+          tls: false
   destination:
     server: https://kubernetes.default.svc
     namespace: default
