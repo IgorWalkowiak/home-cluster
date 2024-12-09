@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/IgorWalkowiak/argo-apps
+    repoURL: https://github.com/IgorWalkowiak/home-cluster
     targetRevision: master
     path: manifests/cluster-issuer
   destination:
