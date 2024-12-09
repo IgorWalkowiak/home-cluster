@@ -19,13 +19,13 @@ spec:
             cert-manager.io/cluster-issuer: "letsencrypt-prod"
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
             traefik.ingress.kubernetes.io/router.tls.certresolver: "duckdnsresolver"
-          hostname: test.iwal.duckdns.org
+          hostname: iwal.duckdns.org
           path: /
           pathType: Prefix
           tls: true
           extraTls:
             - hosts:
-                - test.iwal.duckdns.org
+                - iwal.duckdns.org
   destination:
     server: https://kubernetes.default.svc
     namespace: default
