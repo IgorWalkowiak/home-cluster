@@ -9,6 +9,22 @@ spec:
     repoURL: https://charts.bitnami.com/bitnami
     chart: minio
     targetRevision: 14.8.2
+    helm:
+      values: |
+        ingress:
+          enabled: true
+          annotations:
+            cert-manager.io/cluster-issuer: "letsencrypt-prod"
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+            traefik.ingress.kubernetes.io/router.tls.certresolver: "duckdnsresolver"
+          hostname: minio.iwal.duckdns.org
+          path: /
+          pathType: Prefix
+          tls: true
+          extraTls:
+            - hosts:
+              - minio.iwal.duckdns.org
+              secretName: minio-cert
   destination:
     server: https://kubernetes.default.svc
     namespace: admin
