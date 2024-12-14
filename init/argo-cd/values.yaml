@@ -16,3 +16,21 @@ controller:
       memory: "256Mi"
   extraArgs:
   - --application-namespaces=*
+server:
+  insecure: true
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+      traefik.ingress.kubernetes.io/router.tls.certresolver: "duckdnsresolver"
+    hostname: argo.iwal.duckdns.org
+    path: /
+    pathType: Prefix
+    extraTls:
+      - hosts:
+        - argo.iwal.duckdns.org
+        secretName: argo-test-cert
+configs:
+  params:
+    server.insecure: true
