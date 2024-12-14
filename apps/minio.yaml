@@ -48,7 +48,7 @@ spec:
           extraTls:
             - hosts:
               - api.minio.iwal.duckdns.org
-              secretName: minio-cert
+              secretName: api-minio-cert
   destination:
     server: https://kubernetes.default.svc
     namespace: admin
