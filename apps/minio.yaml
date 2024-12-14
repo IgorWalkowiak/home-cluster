@@ -11,16 +11,15 @@ spec:
     targetRevision: 14.8.2
     helm:
       values: |
-        provisioning:
-          resources:
-            limits:
-              cpu: "1000m"
-              ephemeral-storage: 2Gi
-              memory: "512Mi"
-            requests:
-              cpu: "250m"
-              ephemeral-storage: 50Mi
-              memory: "256Mi"
+        resources:
+          limits:
+            cpu: "1000m"
+            ephemeral-storage: 2Gi
+            memory: "512Mi"
+          requests:
+            cpu: "250m"
+            ephemeral-storage: 50Mi
+            memory: "256Mi"
         ingress:
           enabled: true
           annotations:
