@@ -30,7 +30,7 @@ server:
     extraTls:
       - hosts:
         - argo.iwal.duckdns.org
-        secretName: argo-test-cert
+        secretName: argo-cert
 configs:
   params:
     server.insecure: true

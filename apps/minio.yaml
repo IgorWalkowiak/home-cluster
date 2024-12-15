@@ -11,6 +11,8 @@ spec:
     targetRevision: 14.8.2
     helm:
       values: |
+        persistence:
+          existingClaim: "usb-drive-1-pv"
         resources:
           limits:
             cpu: "2000m"
