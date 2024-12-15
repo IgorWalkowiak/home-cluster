@@ -13,6 +13,7 @@ spec:
       values: |
         persistence:
           storageClass: local-storage
+          existingClaim: minio-pvc
         resources:
           limits:
             cpu: "2000m"
