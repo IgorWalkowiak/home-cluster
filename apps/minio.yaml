@@ -12,7 +12,7 @@ spec:
     helm:
       values: |
         persistence:
-          existingClaim: "usb-drive-1-pv"
+          storageClass: local-storage
         resources:
           limits:
             cpu: "2000m"
