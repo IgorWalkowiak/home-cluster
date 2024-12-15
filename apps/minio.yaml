@@ -42,8 +42,6 @@ spec:
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
             traefik.ingress.kubernetes.io/router.tls.certresolver: "duckdnsresolver"
           hostname: minioapi.iwal.duckdns.org
-          path: /
-          pathType: Prefix
           tls: true
           extraTls:
             - hosts:
