@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: scraper
+  namespace: admin
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/IgorWalkowiak/yet-another-scraper
+    targetRevision: master
+    path: helm
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: admin
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
