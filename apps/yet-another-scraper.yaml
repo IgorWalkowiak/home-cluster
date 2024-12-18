@@ -6,9 +6,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/IgorWalkowiak/yet-another-scraper
-    targetRevision: master
-    path: helm
+    repoURL: oci://registry-1.docker.io/femex/yet-another-scraper-helm
+    targetRevision: latest
   destination:
     server: https://kubernetes.default.svc
     namespace: admin
