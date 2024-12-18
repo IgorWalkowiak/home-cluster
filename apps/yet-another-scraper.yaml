@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: test
+    repoURL: registry-1.docker.io/femex
     chart: yet-another-scraper-helm
     targetRevision: "*-0"
   destination:
