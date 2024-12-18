@@ -6,7 +6,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: oci://registry-1.docker.io/femex/yet-another-scraper-helm
+    repoURL: oci://registry-1.docker.io/femex
+    chart: yet-another-scraper-helm
     targetRevision: latest
   destination:
     server: https://kubernetes.default.svc
