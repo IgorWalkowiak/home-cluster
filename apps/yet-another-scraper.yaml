@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: scraper
-  namespace: admin
+  namespace: default
 spec:
   project: default
   source:
@@ -11,7 +11,7 @@ spec:
     targetRevision: "*-0"
   destination:
     server: https://kubernetes.default.svc
-    namespace: admin
+    namespace: default
   syncPolicy:
     automated:
       prune: true
