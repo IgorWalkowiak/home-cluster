@@ -16,7 +16,7 @@ spec:
             connector.name=memory
             memory.max-data-per-node=128MB
 
-          iceberg-minio: |
+          iceberg_minio: |
             connector.name=iceberg
             iceberg.catalog.type=nessie
             iceberg.nessie-catalog.uri=http://nessie.default.svc.cluster.local:19120/api/v2
