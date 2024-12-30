@@ -21,6 +21,7 @@ spec:
             iceberg.catalog.type=nessie
             iceberg.nessie-catalog.uri=http://nessie.default.svc.cluster.local:19120/api/v2
             iceberg.nessie-catalog.default-warehouse-dir=/tmp
+            fs.native-s3.enabled=true
 
   destination:
     server: https://kubernetes.default.svc
