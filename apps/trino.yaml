@@ -18,7 +18,7 @@ spec:
 
           iceberg-minio: |
             connector.name=iceberg
-            catalog.type=nessie
+            iceberg.catalog.type=nessie
             nessie-catalog.uri=http://nessie.default.svc.cluster.local:19120/api/v2
             nessie-catalog.default-warehouse-dir=/tmp
             warehouse=s3a://iceberg-data/
