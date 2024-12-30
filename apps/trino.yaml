@@ -12,10 +12,20 @@ spec:
     helm:
       values: |
         catalogs:
-          memory: |
+          memory-test: |
             connector.name=memory
             memory.max-data-per-node=128MB
 
+          iceberg-minio: |
+            connector.name=iceberg
+            catalog.type=nessie
+            nessie.uri=http://nessie.default.svc.cluster.local:19120/api/v2
+            nessie.ref=main
+            warehouse=s3a://iceberg-data/
+            s3.endpoint=http://minio.admin.svc.cluster.local:9000
+            s3.access-key=minioadmin
+            s3.secret-key=test
+            s3.path-style-access=true
 
   destination:
     server: https://kubernetes.default.svc
