@@ -19,12 +19,11 @@ spec:
           iceberg-minio: |
             connector.name=iceberg
             catalog.type=nessie
-            nessie.uri=http://nessie.default.svc.cluster.local:19120/api/v2
-            nessie.ref=main
+            nessie-catalog.uri=http://nessie.default.svc.cluster.local:19120/api/v2
+            nessie-catalog.default-warehouse-dir=/tmp
             warehouse=s3a://iceberg-data/
             s3.endpoint=http://minio.admin.svc.cluster.local:9000
-            s3.access-key=minioadmin
-            s3.secret-key=test
+            s3.region=us-east-1
             s3.path-style-access=true
 
   destination:
