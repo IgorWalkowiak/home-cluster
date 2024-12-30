@@ -21,7 +21,7 @@ spec:
             iceberg.catalog.type=nessie
             iceberg.nessie-catalog.uri=http://nessie.default.svc.cluster.local:19120/api/v2
             iceberg.nessie-catalog.default-warehouse-dir=/tmp
-            location = 's3a://iceberg-data/
+            location='s3a://iceberg-data/
             s3.endpoint=http://minio.admin.svc.cluster.local:9000
             s3.region=us-east-1
             s3.path-style-access=true
