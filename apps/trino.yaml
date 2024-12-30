@@ -9,6 +9,14 @@ spec:
     repoURL: https://trinodb.github.io/charts
     chart: trino
     targetRevision: 1.35.0
+    helm:
+      values: |
+        catalogs:
+          memory: |
+            connector.name=memory
+            memory.max-data-per-node=128MB
+
+
   destination:
     server: https://kubernetes.default.svc
     namespace: default
