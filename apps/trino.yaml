@@ -9,9 +9,6 @@ spec:
     repoURL: https://trinodb.github.io/charts
     chart: trino
     targetRevision: 1.35.0
-    helm:
-      values: |
-        catalogs: null
   destination:
     server: https://kubernetes.default.svc
     namespace: default
