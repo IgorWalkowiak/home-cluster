@@ -14,7 +14,7 @@ spec:
         configMounts:
           - name: sample
             configMap: trino-catalogs
-            path: /etc/trino/catalog/test
+            path: /etc/trino/catalog
   destination:
     server: https://kubernetes.default.svc
     namespace: default
