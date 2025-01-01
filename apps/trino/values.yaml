@@ -1,0 +1,20 @@
+catalogs:
+  memory-test: |
+    connector.name=memory
+    memory.max-data-per-node=128MB
+
+  iceberg_minio: |
+    connector.name=iceberg
+    iceberg.catalog.type=nessie
+    iceberg.nessie-catalog.uri=http://nessie.default.svc.cluster.local:19120/api/v2
+    iceberg.nessie-catalog.default-warehouse-dir=/tmp
+    fs.native-s3.enabled=true
+    s3.endpoint=http://minio.admin.svc.cluster.local:9000
+    s3.region=us-east-1
+    s3.path-style-access=true
+    s3.aws-access-key={{ .Values.s3.accessKey }}
+    s3.aws-secret-key={{ .Values.s3.secretKey }}
+
+s3:
+  accessKey: "{{ requiredEnv 'AWS_ACCESS_KEY' }}"
+  secretKey: "{{ requiredEnv 'AWS_SECRET_KEY' }}"
