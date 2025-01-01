@@ -13,8 +13,8 @@ spec:
       values: |
         configMounts:
           - name: sample
-            configMap: nessie
-            path: /etc/trino/catalog/test
+            configMap: trino-catalogs
+            path: /etc/trino/catalog
   destination:
     server: https://kubernetes.default.svc
     namespace: default
