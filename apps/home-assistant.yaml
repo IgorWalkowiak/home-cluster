@@ -25,7 +25,6 @@ spec:
           tls:
             - hosts:
               - ha.iwal.duckdns.org
-              secretName: home-assistant-cert
   destination:
     server: https://kubernetes.default.svc
     namespace: default
