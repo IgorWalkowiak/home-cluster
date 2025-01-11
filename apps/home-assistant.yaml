@@ -22,8 +22,7 @@ spec:
           hostname: ha.iwal.duckdns.org
           path: /
           pathType: Prefix
-          tls: true
-          extraTls:
+          tls:
             - hosts:
               - ha.iwal.duckdns.org
               secretName: home-assistant-cert
