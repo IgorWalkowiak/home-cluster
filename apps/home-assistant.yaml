@@ -11,6 +11,9 @@ spec:
     targetRevision: 0.2.100
     helm:
       values: |
+        configuration:
+          trusted_proxies:
+            - 10.42.0.0/16
         service:
           type: ClusterIP
         ingress:
@@ -28,9 +31,6 @@ spec:
             - hosts:
               - ha.iwal.duckdns.org
               secretName: home-assistant-cert
-          configuration:
-            trusted_proxies:
-              - 10.42.0.0/16
   destination:
     server: https://kubernetes.default.svc
     namespace: default
