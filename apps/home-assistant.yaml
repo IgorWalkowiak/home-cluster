@@ -17,6 +17,7 @@ spec:
             - 10.42.0.0/16
         persistence:
           enabled: true
+          storageClass: local-path
         service:
           type: ClusterIP
         ingress:
