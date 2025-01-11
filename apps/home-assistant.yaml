@@ -9,6 +9,24 @@ spec:
     repoURL: http://pajikos.github.io/home-assistant-helm-chart
     chart: home-assistant
     targetRevision: 0.2.100
+    helm:
+      values: |
+        service:
+          type: ClusterIP
+        ingress:
+          enabled: true
+          annotations:
+            cert-manager.io/cluster-issuer: "letsencrypt-prod"
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+            traefik.ingress.kubernetes.io/router.tls.certresolver: "duckdnsresolver"
+          hostname: ha.iwal.duckdns.org
+          path: /
+          pathType: Prefix
+          tls: true
+          extraTls:
+            - hosts:
+              - test.iwal.duckdns.org
+              secretName: home-assistant-cert
   destination:
     server: https://kubernetes.default.svc
     namespace: default
