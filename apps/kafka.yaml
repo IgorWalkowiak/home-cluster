@@ -9,6 +9,17 @@ spec:
     repoURL: registry-1.docker.io/bitnamicharts
     chart: kafka
     targetRevision: 31.2.0
+    helm:
+      values: |
+        listeners:
+          clients:
+            protocol: PLAINTEXT
+          controller:
+            protocol: PLAINTEXT
+          interbroker:
+            protocol: PLAINTEXT
+          external:
+            protocol: PLAINTEXT
   destination:
     server: https://kubernetes.default.svc
     namespace: default
