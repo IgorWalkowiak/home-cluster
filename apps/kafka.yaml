@@ -12,7 +12,7 @@ spec:
     helm:
       values: |
         listeners:
-          clients:
+          client:
             protocol: PLAINTEXT
           controller:
             protocol: PLAINTEXT
