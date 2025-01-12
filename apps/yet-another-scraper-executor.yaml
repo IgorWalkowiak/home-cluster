@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: scraper
+  name: scraper-executor
   namespace: admin
 spec:
   project: default
   source:
     repoURL: registry-1.docker.io/femex
-    chart: yet-another-scraper-helm
+    chart: yet-another-scraper-executor-helm
     targetRevision: "*-0"
   destination:
     server: https://kubernetes.default.svc
