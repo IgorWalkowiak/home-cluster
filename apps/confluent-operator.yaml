@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: confluent-operator
-  namespace: confluent
+  name: nessie
+  namespace: admin
 spec:
   project: default
   source:
-    repoURL: https://packages.confluent.io/helm
+    repoURL: confluentinc
     chart: confluent-for-kubernetes
     targetRevision: 2.10.0
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: confluent
   syncPolicy:
     automated:
       prune: true
