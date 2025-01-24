@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: packages.confluent.io/helm
     chart: confluent-for-kubernetes
-    targetRevision: 2.10.0
+    targetRevision: 0.1145.6
   destination:
     server: https://kubernetes.default.svc
     namespace: confluent
