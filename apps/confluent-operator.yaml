@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nessie
+  name: confluent-operator
   namespace: admin
 spec:
   project: default
