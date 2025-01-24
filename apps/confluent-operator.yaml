@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: confluentinc
+    repoURL: packages.confluent.io/helm
     chart: confluent-for-kubernetes
     targetRevision: 2.10.0
   destination:
