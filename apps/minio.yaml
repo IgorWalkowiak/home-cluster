@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: registry-1.docker.io/bitnamicharts
     chart: minio
-    targetRevision: 14.10.1
+    targetRevision: 15.0.7
     helm:
       values: |
         persistence:
