@@ -6,7 +6,7 @@ metadata:
 spec:
   valuesContent: |-
     additionalArguments:
-      - "--api=true"
+      - "--api"
       - "--api.dashboard=true"
       - "--api.insecure=true"
       - "--log.level=DEBUG"
