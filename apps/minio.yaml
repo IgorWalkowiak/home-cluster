@@ -11,13 +11,6 @@ spec:
     targetRevision: 15.0.7
     helm:
       values: |
-        extraEnvVars:
-          - name: MINIO_SERVER_URL
-            value: "https://minioapi.iwal.duckdns.org"
-          - name: MINIO_BROWSER_REDIRECT_URL
-            value: "https://minio.iwal.duckdns.org"
-          - name: MINIO_DOMAIN
-            value: "minio.iwal.duckdns.org"
         persistence:
           storageClass: local-storage
           existingClaim: minio-pvc
