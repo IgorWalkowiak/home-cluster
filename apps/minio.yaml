@@ -29,7 +29,7 @@ spec:
             cert-manager.io/cluster-issuer: "letsencrypt-prod"
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
             traefik.ingress.kubernetes.io/router.tls.certresolver: "duckdnsresolver"
-          hostname: https://minio.iwal.duckdns.org
+          hostname: minio.iwal.duckdns.org
           path: /
           pathType: Prefix
           tls: true
@@ -48,7 +48,7 @@ spec:
           tls: true
           extraTls:
             - hosts:
-              - minioapi.iwal.duckdns.org
+              - https://minioapi.iwal.duckdns.org
               secretName: minioapi-cert
   destination:
     server: https://kubernetes.default.svc
