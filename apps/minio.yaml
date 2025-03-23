@@ -13,7 +13,7 @@ spec:
       values: |
         extraEnvVars:
           - name: MINIO_SERVER_URL
-            value: "https://minioapi.iwal.duckdns.org:443"
+            value: "https://minioapi.iwal.duckdns.org:442"
         persistence:
           storageClass: local-storage
           existingClaim: minio-pvc
