@@ -13,7 +13,7 @@ spec:
       values: |
         extraEnvVars:
           - name: MINIO_SERVER_URL
-            value: "https://minio.iwal.duckdns.org"
+            value: "https://minioapi.iwal.duckdns.org"
           - name: MINIO_BROWSER_REDIRECT_URL
             value: "https://minio.iwal.duckdns.org"
         persistence:
