@@ -11,6 +11,9 @@ spec:
     targetRevision: 15.0.7
     helm:
       values: |
+        extraEnvVars:
+          - name: MINIO_SERVER_URL
+            value: "https://minioapi.iwal.duckdns.org:443"
         persistence:
           storageClass: local-storage
           existingClaim: minio-pvc
