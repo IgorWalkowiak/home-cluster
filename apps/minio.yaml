@@ -11,6 +11,11 @@ spec:
     targetRevision: 15.0.7
     helm:
       values: |
+        extraEnvVars:
+          - name: MINIO_SERVER_URL
+            value: "https://minio.iwal.duckdns.org"
+          - name: MINIO_BROWSER_REDIRECT_URL
+            value: "https://minio.iwal.duckdns.org"
         persistence:
           storageClass: local-storage
           existingClaim: minio-pvc
@@ -44,7 +49,7 @@ spec:
             cert-manager.io/cluster-issuer: "letsencrypt-prod"
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
             traefik.ingress.kubernetes.io/router.tls.certresolver: "duckdnsresolver"
-          hostname: https://minioapi.iwal.duckdns.org
+          hostname: minioapi.iwal.duckdns.org
           tls: true
           extraTls:
             - hosts:
