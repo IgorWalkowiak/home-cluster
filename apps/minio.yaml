@@ -9,11 +9,11 @@ spec:
     repoURL: registry-1.docker.io/bitnamicharts
     chart: minio
     targetRevision: 15.0.7
-    helm:
+    elm:
       values: |
         extraEnvVars:
           - name: MINIO_SERVER_URL
-            value: "https://minioapi.iwal.duckdns.org:442"
+            value: "https://minio.iwal.duckdns.org"
         persistence:
           storageClass: local-storage
           existingClaim: minio-pvc
