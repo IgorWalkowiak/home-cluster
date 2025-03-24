@@ -13,7 +13,7 @@ spec:
       values: |
         extraEnvVars:
           - name: MINIO_BROWSER_REDIRECT_URL
-            value: "http://miniteo.internal.local:9001"
+            value: "https://minio.iwal.duckdns.org"
         persistence:
           storageClass: local-storage
           existingClaim: minio-pvc
