@@ -11,9 +11,6 @@ spec:
     targetRevision: 15.0.7
     elm:
       values: |
-        extraEnvVars:
-          - name: MINIO_SERVER_URL
-            value: "https://minio.iwal.duckdns.org"
         persistence:
           storageClass: local-storage
           existingClaim: minio-pvc
