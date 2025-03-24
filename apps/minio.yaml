@@ -13,9 +13,9 @@ spec:
       values: |
         extraEnvVars:
           - name: MINIO_SERVER_URL
-            value: "https://minioss.iwal.duckdns.org"
+            value: "https://minio.iwal.duckdns.org"
           - name: MINIO_BROWSER_REDIRECT_URL
-            value: "https://miniossxx.iwal.duckdns.org"
+            value: "http://minio.internal.local:9001"
         persistence:
           storageClass: local-storage
           existingClaim: minio-pvc
