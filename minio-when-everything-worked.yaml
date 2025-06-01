@@ -1,0 +1,66 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minio
+  namespace: admin
+spec:
+  project: default
+  source:
+    repoURL: registry-1.docker.io/bitnamicharts
+    chart: minio
+    targetRevision: 15.0.7
+
+    helm:
+      values: |
+        extraEnvVars:
+          - name: MINIO_BROWSER_REDIRECT_URL
+            value: "https://minio.iwal.duckdns.org"
+        persistence:
+          storageClass: local-storage
+          existingClaim: minio-pvc
+        resources:
+          limits:
+            cpu: "2000m"
+            ephemeral-storage: 2Gi
+            memory: "1Gi"
+          requests:
+            cpu: "250m"
+            ephemeral-storage: 50Mi
+            memory: "256Mi"
+        ingress:
+          enabled: true
+          annotations:
+            cert-manager.io/cluster-issuer: "letsencrypt-prod"
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+            traefik.ingress.kubernetes.io/router.tls.certresolver: "duckdnsresolver"
+          hostname: minio.iwal.duckdns.org
+          path: /
+          pathType: Prefix
+          tls: true
+          extraTls:
+            - hosts:
+              - minio.iwal.duckdns.org
+              secretName: minio-cert
+      
+        apiIngress:
+          enabled: true
+          annotations:
+            cert-manager.io/cluster-issuer: "letsencrypt-prod"
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+            traefik.ingress.kubernetes.io/router.tls.certresolver: "duckdnsresolver"
+          hostname: minioapi.iwal.duckdns.org
+          tls: true
+          extraTls:
+            - hosts:
+              - minioapi.iwal.duckdns.org
+              secretName: minioapi-cert
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: admin
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+/*
+*/
