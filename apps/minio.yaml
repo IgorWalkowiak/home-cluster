@@ -24,6 +24,33 @@ spec:
             cpu: "250m"
             ephemeral-storage: 50Mi
             memory: "256Mi"
+        ingress:
+          enabled: true
+          annotations:
+            cert-manager.io/cluster-issuer: "letsencrypt-prod"
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+            traefik.ingress.kubernetes.io/router.tls.certresolver: "duckdnsresolver"
+          hostname: minio.iwal.duckdns.org
+          path: /
+          pathType: Prefix
+          tls: true
+          extraTls:
+            - hosts:
+              - minio.iwal.duckdns.org
+              secretName: minio-cert
+      
+        apiIngress:
+          enabled: true
+          annotations:
+            cert-manager.io/cluster-issuer: "letsencrypt-prod"
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+            traefik.ingress.kubernetes.io/router.tls.certresolver: "duckdnsresolver"
+          hostname: minioapi.iwal.duckdns.org
+          tls: true
+          extraTls:
+            - hosts:
+              - minioapi.iwal.duckdns.org
+              secretName: minioapi-cert
   destination:
     server: https://kubernetes.default.svc
     namespace: admin
