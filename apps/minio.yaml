@@ -9,11 +9,12 @@ spec:
     repoURL: registry-1.docker.io/bitnamicharts
     chart: minio
     targetRevision: 15.0.7
+
     helm:
+      #extraEnvVars:
+      #  - name: MINIO_BROWSER_REDIRECT_URL
+      #    value: "https://minio.iwal.duckdns.org"
       values: |
-        extraEnvVars:
-          - name: MINIO_BROWSER_REDIRECT_URL
-            value: "https://minio.iwal.duckdns.org"
         persistence:
           storageClass: local-storage
           existingClaim: minio-pvc
