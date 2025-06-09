@@ -9,7 +9,6 @@ spec:
     repoURL: registry-1.docker.io/bitnamicharts
     chart: minio
     targetRevision: 15.0.7
-
     helm:
       values: |
         persistence:
@@ -27,30 +26,22 @@ spec:
         ingress:
           enabled: true
           annotations:
-            cert-manager.io/cluster-issuer: "letsencrypt-prod"
-            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-            traefik.ingress.kubernetes.io/router.tls.certresolver: "duckdnsresolver"
+            # Usunięte wszystkie adnotacje związane z HTTPS/TLS
+            traefik.ingress.kubernetes.io/router.entrypoints: "web"
           hostname: minio.iwal.duckdns.org
           path: /
           pathType: Prefix
-          tls: true
-          extraTls:
-            - hosts:
-              - minio.iwal.duckdns.org
-              secretName: minio-cert
+          tls: false  # Wyłączone TLS
+          # Usunięte extraTls
       
         apiIngress:
           enabled: true
           annotations:
-            cert-manager.io/cluster-issuer: "letsencrypt-prod"
-            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-            traefik.ingress.kubernetes.io/router.tls.certresolver: "duckdnsresolver"
+            # Usunięte wszystkie adnotacje związane z HTTPS/TLS
+            traefik.ingress.kubernetes.io/router.entrypoints: "web"
           hostname: minioapi.iwal.duckdns.org
-          tls: true
-          extraTls:
-            - hosts:
-              - minioapi.iwal.duckdns.org
-              secretName: minioapi-cert
+          tls: false  # Wyłączone TLS
+          # Usunięte extraTls
   destination:
     server: https://kubernetes.default.svc
     namespace: admin
