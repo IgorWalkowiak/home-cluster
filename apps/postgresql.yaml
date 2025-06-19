@@ -28,6 +28,11 @@ spec:
             requests:
               cpu: "250m"
               memory: "256Mi"
+        primary:
+          service:
+            type: NodePort
+            nodePorts:
+              postgresql: 5432
   destination:
     server: https://kubernetes.default.svc
     namespace: admin
