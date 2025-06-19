@@ -32,7 +32,7 @@ spec:
           service:
             type: NodePort
             nodePorts:
-              postgresql: 5432
+              postgresql: 30001
   destination:
     server: https://kubernetes.default.svc
     namespace: admin
