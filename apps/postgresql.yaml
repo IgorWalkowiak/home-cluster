@@ -11,9 +11,6 @@ spec:
     targetRevision: 16.7.12
     helm:
       values: |
-        auth:
-          postgresPassword: "admin123"
-          database: "appdb"
         primary:
           persistence:
             enabled: true
