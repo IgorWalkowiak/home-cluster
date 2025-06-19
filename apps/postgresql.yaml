@@ -15,11 +15,6 @@ spec:
           debug: true
         global:
           defaultStorageClass: smb-sc
-        auth:
-          postgresPassword: "postgres123"
-          username: "appuser"
-          password: "postgres123"
-          database: "appdb"
         primary:
           persistence:
             enabled: true
