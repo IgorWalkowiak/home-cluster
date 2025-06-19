@@ -11,8 +11,8 @@ spec:
     targetRevision: 16.7.12
     helm:
       values: |
-        diagnosticMode:
-          enabled: true
+        image:
+          debug: true
         global:
           defaultStorageClass: smb-sc
         auth:
