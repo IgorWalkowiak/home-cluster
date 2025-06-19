@@ -17,7 +17,7 @@ spec:
         primary:
           persistence:
             enabled: true
-            storageClass: "smb-pvc"
+            storageClass: "smb-sc"
             size: 8Gi
           resources:
             limits:
