@@ -15,12 +15,6 @@ spec:
           debug: true
         global:
           defaultStorageClass: smb-sc
-        auth:
-          existingSecret: "postgresql-secret"
-          secretKeys:
-            adminPasswordKey: "postgres-password"
-            userPasswordKey: "user-password"
-            replicationPasswordKey: "replication-password"
         primary:
           persistence:
             enabled: true
