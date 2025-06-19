@@ -28,6 +28,10 @@ spec:
             requests:
               cpu: "250m"
               memory: "256Mi"
+        ingress:
+          enabled: true
+          hostname: postgresql.local
+          tls: false
   destination:
     server: https://kubernetes.default.svc
     namespace: admin
