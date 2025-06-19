@@ -1,0 +1,46 @@
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Kubernetes temporary files
+*.orig
+kubeconfig*
+config
+
+# Helm
+.helm/
+
+# Secrets and sensitive data
+secrets/
+*.key
+*.crt
+*.pem
+
+# Backup files
+*.bak
+*.backup
+
+# Local environment files
+.env
+.env.local
+
+# Cache directories
+.cache/
+
+# Build artifacts
+dist/
+build/ 
