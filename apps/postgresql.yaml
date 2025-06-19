@@ -21,14 +21,13 @@ spec:
           persistence:
             enabled: true
             size: 2Ti
-          resourcesPreset: "medium"
           resources:
             limits:
-              cpu: "2000m"
-              memory: "2Gi"
+              cpu: "4000m"
+              memory: "4Gi"
             requests:
-              cpu: "1000m"
-              memory: "1Gi"
+              cpu: "250m"
+              memory: "256Mi"
           service:
             type: NodePort
             nodePorts:
