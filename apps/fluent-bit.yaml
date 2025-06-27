@@ -161,7 +161,7 @@ spec:
         metricsPort: 2020
   destination:
     server: https://kubernetes.default.svc
-    namespace: monitoring
+    namespace: admin
   syncPolicy:
     automated:
       prune: true

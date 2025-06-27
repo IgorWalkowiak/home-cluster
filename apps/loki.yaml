@@ -28,7 +28,7 @@ spec:
             memory: 256Mi
   destination:
     server: https://kubernetes.default.svc
-    namespace: monitoring
+    namespace: admin
   syncPolicy:
     automated:
       prune: true
