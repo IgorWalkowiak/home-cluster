@@ -43,14 +43,9 @@ spec:
               - /bin/bash
               - -c
               - |
-                # Ustawiamy hasło z zmiennych środowiskowych (tak jak w domyślnej komendzie)
                 export PGPASSWORD="${PGPASSWORD:-$(< "$PGPASSWORD_FILE")}"
                 pg_dumpall --clean --if-exists --load-via-partition-root --quote-all-identifiers --no-password --file="${PGDUMP_DIR}/pg_dumpall-$(date '+%Y-%m-%d-%H-%M').pgdump"
-                
-                if [ $? -eq 0 ] && [ -f "${PGDUMP_DIR}/pg_dumpall-$(date '+%Y-%m-%d-%H-%M').pgdump" ]; then
-                  gzip "${PGDUMP_DIR}/pg_dumpall-$(date '+%Y-%m-%d-%H-%M').pgdump"
-                fi
-  
+                gzip "${PGDUMP_DIR}/pg_dumpall-$(date '+%Y-%m-%d-%H-%M').pgdump"
                 find ${PGDUMP_DIR} -name "pg_dumpall-*.pgdump.gz" -type f -mtime +7 -delete
             storage:
               enabled: true
