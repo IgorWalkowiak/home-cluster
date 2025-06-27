@@ -35,7 +35,16 @@ spec:
         backup:
           enabled: true
           cronjob:
-            schedule: "@daily"
+            schedule: "0 * * * *"
+            successfulJobsHistoryLimit: 7
+            failedJobsHistoryLimit: 3
+            ttlSecondsAfterFinished: 86400
+            command:
+              - /bin/sh
+              - -c
+              - |
+                pg_dumpall --clean --if-exists --load-via-partition-root --quote-all-identifiers --no-password | gzip > ${PGDUMP_DIR}/pg_dumpall-$(date '+%Y-%m-%d-%H-%M').pgdump.gz
+                find ${PGDUMP_DIR} -name "pg_dumpall-*.pgdump.gz" -type f -mtime +7 -delete
             storage:
               enabled: true
               size: 3Ti
