@@ -43,10 +43,15 @@ spec:
               - /bin/bash
               - -c
               - |
-                export PGPASSWORD="${PGPASSWORD:-$(< "$PGPASSWORD_FILE")}"
-                pg_dumpall --clean --if-exists --load-via-partition-root --quote-all-identifiers --no-password --file="${PGDUMP_DIR}/pg_dumpall-$(date '+%Y-%m-%d-%H-%M').pgdump"
-                gzip "${PGDUMP_DIR}/pg_dumpall-$(date '+%Y-%m-%d-%H-%M').pgdump"
-                find ${PGDUMP_DIR} -name "pg_dumpall-*.pgdump.gz" -type f -mtime +7 -delete
+                  # Zapisujemy datę do zmiennej na początku
+                  BACKUP_DATE=$(date '+%Y-%m-%d-%H-%M')
+                  BACKUP_FILE="${PGDUMP_DIR}/pg_dumpall-${BACKUP_DATE}.pgdump"
+                  
+                  export PGPASSWORD="${PGPASSWORD:-$(< "$PGPASSWORD_FILE")}"
+                  pg_dumpall --clean --if-exists --load-via-partition-root --quote-all-identifiers --no-password --file="${BACKUP_FILE}"
+                  gzip "${BACKUP_FILE}"
+                  
+                  find ${PGDUMP_DIR} -name "pg_dumpall-*.pgdump.gz" -type f -mtime +7 -delete
             storage:
               enabled: true
               size: 3Ti
