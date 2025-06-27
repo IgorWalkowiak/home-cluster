@@ -1,0 +1,99 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: admin
+spec:
+  project: default
+  source:
+    repoURL: registry-1.docker.io/bitnamicharts
+    chart: grafana
+    targetRevision: 11.6.6
+    helm:
+      values: |
+        global:
+          storageClass: smb-sc
+        
+        admin:
+          existingSecret: grafana-admin-secret
+          existingSecretPasswordKey: admin-password
+        
+        ingress:
+          enabled: true
+          ingressClassName: nginx
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-prod
+            nginx.ingress.kubernetes.io/ssl-redirect: "true"
+          hostname: grafana.local
+          tls: true
+          tlsSecret: grafana-tls
+        
+        persistence:
+          enabled: true
+          size: 5Gi
+          storageClass: smb-sc
+          accessModes:
+            - ReadWriteOnce
+        
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+        
+        # Grafana configuration
+        config:
+          useGrafanaIniFile: true
+          grafanaIniConfigMap: grafana-config
+        
+        datasources:
+          secretName: grafana-datasources
+        
+        dashboards:
+          configMapName: grafana-dashboards
+        
+        plugins: "grafana-piechart-panel,grafana-worldmap-panel,grafana-clock-panel"
+        
+        serviceMonitor:
+          enabled: true
+          namespace: monitoring
+          interval: 30s
+          scrapeTimeout: 10s
+        
+        podSecurityContext:
+          enabled: true
+          fsGroup: 1001
+          runAsGroup: 1001
+          runAsNonRoot: true
+          runAsUser: 1001
+        
+        containerSecurityContext:
+          enabled: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+          runAsUser: 1001
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grafana-admin-secret
+  namespace: monitoring
+type: Opaque
+data:
+  admin-user: YWRtaW4=  # admin
+  admin-password: YWRtaW4xMjM=  # admin123 
