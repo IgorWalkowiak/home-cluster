@@ -27,6 +27,17 @@ spec:
             cpu: 100m
             memory: 256Mi
 
+        # Konfiguracja PostgreSQL jako bazy danych
+        grafana:
+          database:
+            type: postgres
+            host: postgresql.admin.svc.cluster.local
+            port: 5432
+            name: grafana
+            user: postgres
+            password: ziomek321
+            sslMode: disable
+
         datasources:
           secretDefinition:
             apiVersion: 1
