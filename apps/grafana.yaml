@@ -13,15 +13,12 @@ spec:
       values: |
         global:
           storageClass: smb-sc
-        
         admin:
           password: "admin123"
-        
         persistence:
           enabled: true
           size: 5Gi
           storageClass: smb-sc
-        
         resources:
           limits:
             cpu: 500m
@@ -29,8 +26,7 @@ spec:
           requests:
             cpu: 100m
             memory: 256Mi
-        
-        # Podstawowa konfiguracja datasource dla Loki
+
         datasources:
           secretDefinition:
             apiVersion: 1
