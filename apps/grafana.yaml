@@ -42,7 +42,7 @@ spec:
               isDefault: true
   destination:
     server: https://kubernetes.default.svc
-    namespace: monitoring
+    namespace: admin
   syncPolicy:
     automated:
       prune: true
@@ -54,7 +54,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: grafana-admin-secret
-  namespace: monitoring
+  namespace: admin
 type: Opaque
 data:
   admin-user: YWRtaW4=  # admin
