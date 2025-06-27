@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://grafana.github.io/helm-charts
     chart: loki
-    targetRevision: 7.0.0
+    targetRevision: 6.30.1
     helm:
       values: |
         # Konfiguracja z PostgreSQL dla indeksów i filesystem dla chunks
