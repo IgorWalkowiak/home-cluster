@@ -11,64 +11,65 @@ spec:
     targetRevision: 6.30.0
     helm:
       values: |
-        # Konfiguracja z PostgreSQL dla indeksów i filesystem dla chunks
+        # Pojedynczy pod - SingleBinary mode
+        deploymentMode: SingleBinary
+        
+        # Konfiguracja podstawowa
         loki:
-          config:
-            auth_enabled: false
-            server:
-              http_listen_port: 3100
-              grpc_listen_port: 9095
-              
-            common:
-              path_prefix: /var/loki
-              replication_factor: 1
+          auth_enabled: false
+          commonConfig:
+            path_prefix: /var/loki
+            replication_factor: 1
+            ring:
+              kvstore:
+                store: inmemory
+          
+          schemaConfig:
+            configs:
+              - from: 2020-10-24
+                store: tsdb
+                object_store: filesystem
+                schema: v13
+                index:
+                  prefix: index_
+                  period: 24h
+          
+          ingester:
+            lifecycler:
               ring:
                 kvstore:
                   store: inmemory
-                  
-            schema_config:
-              configs:
-                - from: 2020-10-24
-                  store: tsdb
-                  object_store: filesystem
-                  schema: v13
-                  index:
-                    prefix: index_
-                    period: 24h
-                    
-            storage_config:
-              filesystem:
-                directory: /var/loki/chunks
-              tsdb_shipper:
-                active_index_directory: /var/loki/tsdb-index
-                cache_location: /var/loki/tsdb-cache
-                
-            limits_config:
-              retention_period: 168h # 7 dni
-              
-            compactor:
-              working_directory: /var/loki/compactor
-              retention_enabled: true
-              retention_delete_delay: 2h
-              retention_delete_worker_count: 150
-              
-            ingester:
-              lifecycler:
-                ring:
-                  kvstore:
-                    store: inmemory
-                  replication_factor: 1
-                address: 127.0.0.1
-                port: 9095
-                final_sleep: 0s
-              chunk_idle_period: 1h
-              max_chunk_age: 1h
-              chunk_target_size: 1048576
-              chunk_retain_period: 30s
-              
-        # Pojedynczy pod
-        deploymentMode: SingleBinary
+                replication_factor: 1
+              address: 127.0.0.1
+              port: 9095
+              final_sleep: 0s
+            chunk_idle_period: 1h
+            max_chunk_age: 1h
+            chunk_target_size: 1048576
+            chunk_retain_period: 30s
+          
+          limits_config:
+            retention_period: 168h # 7 dni
+            
+          compactor:
+            working_directory: /var/loki/compactor
+            retention_enabled: true
+            retention_delete_delay: 2h
+            retention_delete_worker_count: 150
+            compaction_interval: 10m
+            
+          server:
+            http_listen_port: 3100
+            grpc_listen_port: 9095
         
+        # Storage - filesystem backend
+        storage:
+          type: filesystem
+          filesystem:
+            chunks_directory: /var/loki/chunks
+            rules_directory: /var/loki/rules
+          
+        # SingleBinary konfiguracja
         singleBinary:
           replicas: 1
           persistence:
@@ -82,27 +83,7 @@ spec:
             requests:
               cpu: 500m
               memory: 512Mi
-          
-        # Wyłączamy niepotrzebne komponenty dla SingleBinary
-        ingester:
-          enabled: false
-        distributor:
-          enabled: false
-        querier:
-          enabled: false
-        queryFrontend:
-          enabled: false
-        queryScheduler:
-          enabled: false
-        compactor:
-          enabled: false
-        indexGateway:
-          enabled: false
-        bloomCompactor:
-          enabled: false
-        bloomGateway:
-          enabled: false
-          
+        
         # Monitoring
         monitoring:
           dashboards:
@@ -111,15 +92,36 @@ spec:
             enabled: false
           serviceMonitor:
             enabled: false
-            
+        
         # Test
         test:
           enabled: false
           
         # Service
-        service:
-          type: ClusterIP
-          port: 3100
+        gateway:
+          enabled: false
+          
+        # Wyłączamy komponenty (dla SingleBinary nie są potrzebne)
+        ingester:
+          replicas: 0
+        distributor:
+          replicas: 0
+        querier:
+          replicas: 0
+        queryFrontend:
+          replicas: 0
+        queryScheduler:
+          replicas: 0
+        compactor:
+          replicas: 0
+        indexGateway:
+          replicas: 0
+        bloomCompactor:
+          replicas: 0
+        bloomGateway:
+          replicas: 0
+        ruler:
+          enabled: false
           
   destination:
     server: https://kubernetes.default.svc
