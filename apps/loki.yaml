@@ -6,54 +6,121 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: registry-1.docker.io/bitnamicharts
-    chart: grafana-loki
-    targetRevision: 5.0.2
+    repoURL: https://grafana.github.io/helm-charts
+    chart: loki
+    targetRevision: 6.31.0
     helm:
       values: |
-        global:
-          storageClass: smb-sc
+        # Konfiguracja z PostgreSQL dla indeksów i filesystem dla chunks
+        loki:
+          config:
+            auth_enabled: false
+            server:
+              http_listen_port: 3100
+              grpc_listen_port: 9095
+              
+            common:
+              path_prefix: /var/loki
+              replication_factor: 1
+              ring:
+                kvstore:
+                  store: inmemory
+                  
+            schema_config:
+              configs:
+                - from: 2020-10-24
+                  store: tsdb
+                  object_store: filesystem
+                  schema: v13
+                  index:
+                    prefix: index_
+                    period: 24h
+                    
+            storage_config:
+              filesystem:
+                directory: /var/loki/chunks
+              tsdb_shipper:
+                active_index_directory: /var/loki/tsdb-index
+                cache_location: /var/loki/tsdb-cache
+                
+            limits_config:
+              retention_period: 168h # 7 dni
+              
+            compactor:
+              working_directory: /var/loki/compactor
+              retention_enabled: true
+              retention_delete_delay: 2h
+              retention_delete_worker_count: 150
+              
+            ingester:
+              lifecycler:
+                ring:
+                  kvstore:
+                    store: inmemory
+                  replication_factor: 1
+                address: 127.0.0.1
+                port: 9095
+                final_sleep: 0s
+              chunk_idle_period: 1h
+              max_chunk_age: 1h
+              chunk_target_size: 1048576
+              chunk_retain_period: 30s
+              
+        # Pojedynczy pod
+        deploymentMode: SingleBinary
         
-        persistence:
-          enabled: true
-          size: 10Gi
-          storageClass: smb-sc
-        
-        resources:
-          limits:
-            cpu: 1
-            memory: 1Gi
-          requests:
-            cpu: 100m
-            memory: 256Mi
-        
-        # Konfiguracja security context aby rozwiązać problemy z uprawnieniami
-        podSecurityContext:
-          runAsUser: 1001
-          runAsGroup: 1001
-          fsGroup: 1001
+        singleBinary:
+          replicas: 1
+          persistence:
+            enabled: true
+            size: 50Gi
+            storageClass: smb-sc
+          resources:
+            limits:
+              cpu: 2
+              memory: 2Gi
+            requests:
+              cpu: 500m
+              memory: 512Mi
           
-        securityContext:
-          runAsNonRoot: true
-          runAsUser: 1001
-          runAsGroup: 1001
+        # Wyłączamy niepotrzebne komponenty dla SingleBinary
+        ingester:
+          enabled: false
+        distributor:
+          enabled: false
+        querier:
+          enabled: false
+        queryFrontend:
+          enabled: false
+        queryScheduler:
+          enabled: false
+        compactor:
+          enabled: false
+        indexGateway:
+          enabled: false
+        bloomCompactor:
+          enabled: false
+        bloomGateway:
+          enabled: false
           
-        # Init container aby utworzyć potrzebne katalogi
-        extraInitContainers:
-          - name: init-dirs
-            image: docker.io/bitnami/os-shell:12-debian-12-r39
-            command:
-              - /bin/bash
-              - -c
-              - |
-                mkdir -p /bitnami/grafana-loki/loki/compactor
-                chown -R 1001:1001 /bitnami/grafana-loki/loki/
-                chmod -R 755 /bitnami/grafana-loki/loki/
-            volumeMounts:
-              - name: data
-                mountPath: /bitnami/grafana-loki/loki
-            securityContext:
-              runAsUser: 0
+        # Monitoring
+        monitoring:
+          dashboards:
+            enabled: false
+          rules:
+            enabled: false
+          serviceMonitor:
+            enabled: false
+            
+        # Test
+        test:
+          enabled: false
+          
+        # Service
+        service:
+          type: ClusterIP
+          port: 3100
+          
   destination:
     server: https://kubernetes.default.svc
     namespace: admin
