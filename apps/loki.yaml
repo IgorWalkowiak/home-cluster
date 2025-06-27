@@ -26,6 +26,34 @@ spec:
           requests:
             cpu: 100m
             memory: 256Mi
+        
+        # Konfiguracja security context aby rozwiązać problemy z uprawnieniami
+        podSecurityContext:
+          runAsUser: 1001
+          runAsGroup: 1001
+          fsGroup: 1001
+          
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1001
+          runAsGroup: 1001
+          
+        # Init container aby utworzyć potrzebne katalogi
+        extraInitContainers:
+          - name: init-dirs
+            image: docker.io/bitnami/os-shell:12-debian-12-r39
+            command:
+              - /bin/bash
+              - -c
+              - |
+                mkdir -p /bitnami/grafana-loki/loki/compactor
+                chown -R 1001:1001 /bitnami/grafana-loki/loki/
+                chmod -R 755 /bitnami/grafana-loki/loki/
+            volumeMounts:
+              - name: data
+                mountPath: /bitnami/grafana-loki/loki
+            securityContext:
+              runAsUser: 0
   destination:
     server: https://kubernetes.default.svc
     namespace: admin

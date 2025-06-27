@@ -35,7 +35,7 @@ spec:
         backup:
           enabled: true
           cronjob:
-            schedule: "0 * * * *"
+            schedule: "0 2 * * *"
             successfulJobsHistoryLimit: 7
             failedJobsHistoryLimit: 3
             ttlSecondsAfterFinished: 86400
@@ -43,7 +43,6 @@ spec:
               - /bin/bash
               - -c
               - |
-                  # Zapisujemy datę do zmiennej na początku
                   BACKUP_DATE=$(date '+%Y-%m-%d-%H-%M')
                   BACKUP_FILE="${PGDUMP_DIR}/pg_dumpall-${BACKUP_DATE}.pgdump"
                   
