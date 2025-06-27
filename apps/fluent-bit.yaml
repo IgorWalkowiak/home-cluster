@@ -18,11 +18,7 @@ spec:
           tag: "3.2.2"
           pullPolicy: IfNotPresent
         
-        env:
-          - name: FLUENT_ELASTICSEARCH_HOST
-            value: "loki"
-          - name: FLUENT_ELASTICSEARCH_PORT
-            value: "3100"
+        env: []
         
         resources:
           limits:
@@ -46,12 +42,9 @@ spec:
         
         serviceAccount:
           create: true
-          annotations: {}
-          name: fluent-bit
         
         rbac:
           create: true
-          nodeAccess: true
         
         podSecurityContext:
           fsGroup: 2000
@@ -68,15 +61,9 @@ spec:
         service:
           type: ClusterIP
           port: 2020
-          labels: {}
-          annotations: {}
         
         serviceMonitor:
-          enabled: true
-          namespace: monitoring
-          interval: 30s
-          scrapeTimeout: 10s
-          selector: {}
+          enabled: false
         
         config:
           service: |
@@ -103,14 +90,6 @@ spec:
                 Tag kube.*
                 Mem_Buf_Limit 50MB
                 Skip_Long_Lines On
-                storage.type filesystem
-                
-            [INPUT]
-                Name systemd
-                Tag host.*
-                Systemd_Filter _SYSTEMD_UNIT=kubelet.service
-                Read_From_Tail On
-                storage.type filesystem
           
           filters: |
             [FILTER]
@@ -119,54 +98,19 @@ spec:
                 Kube_URL https://kubernetes.default.svc:443
                 Kube_CA_File /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
                 Kube_Token_File /var/run/secrets/kubernetes.io/serviceaccount/token
-                Kube_Tag_Prefix kube.var.log.containers.
                 Merge_Log On
-                Merge_Log_Key log_processed
+                Keep_Log Off
                 K8S-Logging.Parser On
                 K8S-Logging.Exclude Off
-                Labels On
-                Annotations On
-                Use_Kubelet On
-                Kubelet_Port 10250
-                Buffer_Size 0
-                
-            [FILTER]
-                Name nest
-                Match kube.*
-                Operation lift
-                Nested_under kubernetes
-                Add_prefix kubernetes_
-                
-            [FILTER]
-                Name modify
-                Match kube.*
-                Copy kubernetes_pod_name pod
-                Copy kubernetes_namespace_name namespace
-                Copy kubernetes_container_name container
-                Remove time
-                Remove kubernetes_pod_id
-                Remove kubernetes_docker_id
-                Remove kubernetes_container_hash
           
           outputs: |
             [OUTPUT]
                 Name loki
-                Match kube.*
+                Match *
                 Host loki.admin.svc.cluster.local
                 Port 3100
-                Labels job=fluent-bit,namespace=$kubernetes_namespace_name,pod=$kubernetes_pod_name,container=$kubernetes_container_name
-                Label_keys $kubernetes_labels
-                Remove_keys kubernetes_labels
-                Line_format json
+                Labels job=fluent-bit
                 Auto_kubernetes_labels on
-                
-            [OUTPUT]
-                Name loki
-                Match host.*
-                Host loki.admin.svc.cluster.local
-                Port 3100
-                Labels job=fluent-bit,hostname=$HOSTNAME
-                Line_format json
           
           customParsers: |
             [PARSER]

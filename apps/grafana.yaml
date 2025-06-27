@@ -15,25 +15,12 @@ spec:
           storageClass: smb-sc
         
         admin:
-          existingSecret: grafana-admin-secret
-          existingSecretPasswordKey: admin-password
-        
-        ingress:
-          enabled: true
-          ingressClassName: nginx
-          annotations:
-            cert-manager.io/cluster-issuer: letsencrypt-prod
-            nginx.ingress.kubernetes.io/ssl-redirect: "true"
-          hostname: grafana.local
-          tls: true
-          tlsSecret: grafana-tls
+          password: "admin123"
         
         persistence:
           enabled: true
           size: 5Gi
           storageClass: smb-sc
-          accessModes:
-            - ReadWriteOnce
         
         resources:
           limits:
@@ -43,41 +30,16 @@ spec:
             cpu: 100m
             memory: 256Mi
         
-        # Grafana configuration
-        config:
-          useGrafanaIniFile: true
-          grafanaIniConfigMap: grafana-config
-        
+        # Podstawowa konfiguracja datasource dla Loki
         datasources:
-          secretName: grafana-datasources
-        
-        dashboards:
-          configMapName: grafana-dashboards
-        
-        plugins: "grafana-piechart-panel,grafana-worldmap-panel,grafana-clock-panel"
-        
-        serviceMonitor:
-          enabled: true
-          namespace: monitoring
-          interval: 30s
-          scrapeTimeout: 10s
-        
-        podSecurityContext:
-          enabled: true
-          fsGroup: 1001
-          runAsGroup: 1001
-          runAsNonRoot: true
-          runAsUser: 1001
-        
-        containerSecurityContext:
-          enabled: true
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - ALL
-          readOnlyRootFilesystem: false
-          runAsNonRoot: true
-          runAsUser: 1001
+          secretDefinition:
+            apiVersion: 1
+            datasources:
+            - name: Loki
+              type: loki
+              access: proxy
+              url: http://loki.admin.svc.cluster.local:3100
+              isDefault: true
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
