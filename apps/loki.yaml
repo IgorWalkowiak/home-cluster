@@ -13,6 +13,9 @@ spec:
       values: |
         queryFrontend:
           resourcesPreset: medium
+        compactor:
+          persistence:
+            size: 30Mi
   destination:
     server: https://kubernetes.default.svc
     namespace: admin
