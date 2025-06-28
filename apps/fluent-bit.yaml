@@ -54,7 +54,6 @@ spec:
                 Host              loki-grafana-loki-query-frontend.admin.svc.cluster.local
                 Port              3100
                 Labels            job=fluent-bit
-                RemoveKeys        stream,time
                 AutoKubernetesLabels on
                 LabelMapPath      /fluent-bit/etc/labelmap.conf
           extraFiles:
