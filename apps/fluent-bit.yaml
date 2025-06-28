@@ -66,7 +66,7 @@ spec:
             [OUTPUT]
                 Name              loki
                 Match             *
-                Uri               http://loki-grafana-loki-distributor.admin.svc.cluster.local:3100/loki/api/v1/push
+                Uri               loki-grafana-loki-distributor.admin.svc.cluster.local
                 Labels            job=fluent-bit,namespace=$k8s_namespace_name,container=$k8s_container_name,pod=$k8s_pod_name
           extraFiles: {}
         rbac:
