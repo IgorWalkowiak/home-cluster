@@ -44,10 +44,13 @@ spec:
               - -c
               - |
                   BACKUP_DATE=$(date '+%Y-%m-%d-%H-%M')
+                  echo "Backup date: ${BACKUP_DATE}"
                   BACKUP_FILE="${PGDUMP_DIR}/pg_dumpall-${BACKUP_DATE}.pgdump"
-                  
+                  echo "Backup file: ${BACKUP_FILE}"
+
                   export PGPASSWORD="${PGPASSWORD:-$(< "$PGPASSWORD_FILE")}"
                   pg_dumpall --clean --if-exists --load-via-partition-root --quote-all-identifiers --no-password --file="${BACKUP_FILE}"
+                  echo "Doing gzip on file: ${BACKUP_FILE}"
                   gzip "${BACKUP_FILE}"
             storage:
               enabled: true
