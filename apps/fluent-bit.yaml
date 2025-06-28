@@ -47,12 +47,6 @@ spec:
                 K8S-Logging.Exclude Off
                 Annotations         On
                 Labels              On
-
-
-
-
-
-
           outputs: |
             [OUTPUT]
                 Name              loki
@@ -60,11 +54,6 @@ spec:
                 Host              loki-grafana-loki-distributor.admin.svc.cluster.local
                 Port              3100
                 Labels            job=fluent-bit
-          extraFiles:
-            labelmap.conf: |
-              kubernetes_pod_name pod
-              kubernetes_namespace_name namespace
-              kubernetes_container_name container
         rbac:
           create: true
           nodeAccess: true
