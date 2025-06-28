@@ -53,15 +53,21 @@ spec:
                 Operation           lift
                 Nested_under        kubernetes
                 Add_prefix          k8s_
+            [FILTER]
+                Name                record_modifier
+                Match               kube.*
+                Remove_key          k8s_host
+                Remove_key          k8s_docker_id
+                Remove_key          k8s_pod_id
+                Remove_key          k8s_pod_ip
+                Remove_key          k8s_container_hash
+                Remove_key          k8s_container_image
           outputs: |
             [OUTPUT]
                 Name              loki
                 Match             *
-                Host              loki-grafana-loki-distributor.admin.svc.cluster.local
-                Port              3100
+                Uri               http://loki-grafana-loki-distributor.admin.svc.cluster.local:3100/loki/api/v1/push
                 Labels            job=fluent-bit,namespace=$k8s_namespace_name,container=$k8s_container_name,pod=$k8s_pod_name
-                RemoveKeys        k8s_host,k8s_docker_id,k8s_pod_id,k8s_pod_ip,k8s_container_hash,k8s_container_image,k8s_labels
-                LineFormat        json
           extraFiles: {}
         rbac:
           create: true
