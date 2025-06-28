@@ -52,6 +52,7 @@ spec:
                   pg_dumpall --clean --if-exists --load-via-partition-root --quote-all-identifiers --no-password --file="${BACKUP_FILE}"
                   echo "Doing gzip on file: ${BACKUP_FILE}"
                   gzip "${BACKUP_FILE}"
+                  ls -1t "${PGDUMP_DIR}"/pg_dumpall-*.pgdump.gz | tail -n +3 | xargs -r rm -v
             storage:
               enabled: true
               size: 3Ti
