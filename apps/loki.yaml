@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: registry-1.docker.io/bitnamicharts
-    chart: loki
+    chart: grafana-loki
     targetRevision: 5.0.0
   destination:
     server: https://kubernetes.default.svc
