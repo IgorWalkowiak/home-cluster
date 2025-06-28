@@ -45,7 +45,7 @@ spec:
                 Keep_Log            Off
                 K8S-Logging.Parser  On
                 K8S-Logging.Exclude Off
-                Annotations         Off
+                Annotations         Offlabelmappath
                 Labels              On
           outputs: |
             [OUTPUT]
@@ -54,7 +54,6 @@ spec:
                 Host              loki-grafana-loki-query-frontend.admin.svc.cluster.local
                 Port              3100
                 Labels            job=fluent-bit
-                LabelMapPath      /fluent-bit/etc/labelmap.conf
           extraFiles:
             labelmap.conf: |
               kubernetes_pod_name pod
