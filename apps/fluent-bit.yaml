@@ -1,4 +1,4 @@
-apiVersion: argoproj.io/v1alpha1
+apiVersion: argoproj.io/v1alpha1More actions
 kind: Application
 metadata:
   name: fluent-bit
@@ -45,31 +45,26 @@ spec:
                 Keep_Log            Off
                 K8S-Logging.Parser  On
                 K8S-Logging.Exclude Off
-                Annotations         Off
-                Labels              Off
-            [FILTER]
-                Name                nest
-                Match               kube.*
-                Operation           lift
-                Nested_under        kubernetes
-                Add_prefix          k8s_
-            [FILTER]
-                Name                record_modifier
-                Match               kube.*
-                Remove_key          k8s_host
-                Remove_key          k8s_docker_id
-                Remove_key          k8s_pod_id
-                Remove_key          k8s_pod_ip
-                Remove_key          k8s_container_hash
-                Remove_key          k8s_container_image
+                Annotations         On
+                Labels              On
+
+
+
+
+
+
           outputs: |
             [OUTPUT]
                 Name              loki
                 Match             *
-                Uri               loki-grafana-loki-distributor.admin.svc.cluster.local
+                Host              loki-grafana-loki-distributor.admin.svc.cluster.local
                 Port              3100
-                Labels            job=fluent-bit,namespace=$k8s_namespace_name,container=$k8s_container_name,pod=$k8s_pod_name
-          extraFiles: {}
+                Labels            job=fluent-bit
+          extraFiles:
+            labelmap.conf: |
+              kubernetes_pod_name pod
+              kubernetes_namespace_name namespace
+              kubernetes_container_name container
         rbac:
           create: true
           nodeAccess: true
@@ -106,4 +101,3 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true 
