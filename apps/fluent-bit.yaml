@@ -51,7 +51,7 @@ spec:
             [OUTPUT]
                 Name              loki
                 Match             *
-                Host              loki-grafana-loki-query-frontend.admin.svc.cluster.local
+                Host              loki-grafana-loki-distributor.admin.svc.cluster.local
                 Port              3100
                 Labels            job=fluent-bit
           extraFiles:
