@@ -67,6 +67,7 @@ spec:
                 Name              loki
                 Match             *
                 Uri               loki-grafana-loki-distributor.admin.svc.cluster.local
+                Port              3100
                 Labels            job=fluent-bit,namespace=$k8s_namespace_name,container=$k8s_container_name,pod=$k8s_pod_name
           extraFiles: {}
         rbac:
