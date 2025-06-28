@@ -45,7 +45,7 @@ spec:
                 Keep_Log            Off
                 K8S-Logging.Parser  On
                 K8S-Logging.Exclude Off
-                Annotations         Offlabelmappath
+                Annotations         On
                 Labels              On
           outputs: |
             [OUTPUT]
