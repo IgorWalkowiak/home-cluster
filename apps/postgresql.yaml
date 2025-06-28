@@ -36,13 +36,6 @@ spec:
           enabled: true
           cronjob:
             schedule: "0 2 * * *"
-            resources:
-              limits:
-                cpu: "3000m"
-                memory: "3Gi"
-              requests:
-                cpu: "500m"
-                memory: "0.5Gi"
             successfulJobsHistoryLimit: 7
             failedJobsHistoryLimit: 3
             ttlSecondsAfterFinished: 86400
@@ -62,11 +55,11 @@ spec:
               storageClass: "smb-sc"
             resources:
               limits:
-                cpu: "500m"
-                memory: "512Mi"
+                cpu: "3000m"
+                memory: "3Gi"
               requests:
-                cpu: "100m"
-                memory: "128Mi"
+                cpu: "500m"
+                memory: "0.5Gi"
   destination:
     server: https://kubernetes.default.svc
     namespace: admin
