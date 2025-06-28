@@ -12,7 +12,21 @@ spec:
     helm:
       values: |
         queryFrontend:
-          resourcesPreset: medium
+          resources:
+            limits:
+              cpu: "4000m"
+              memory: "4Gi"
+            requests:
+              cpu: "250m"
+              memory: "100Mi"
+        querier:
+          resources:
+            limits:
+              cpu: "4000m"
+              memory: "4Gi"
+            requests:
+              cpu: "250m"
+              memory: "100Mi"
         grafanaalloy:
           enabled: false
   destination:
