@@ -45,20 +45,24 @@ spec:
                 Keep_Log            Off
                 K8S-Logging.Parser  On
                 K8S-Logging.Exclude Off
-                Annotations         On
-                Labels              On
+                Annotations         Off
+                Labels              Off
+            [FILTER]
+                Name                nest
+                Match               kube.*
+                Operation           lift
+                Nested_under        kubernetes
+                Add_prefix          k8s_
           outputs: |
             [OUTPUT]
                 Name              loki
                 Match             *
                 Host              loki-grafana-loki-distributor.admin.svc.cluster.local
                 Port              3100
-                Labels            job=fluent-bit
-          extraFiles:
-            labelmap.conf: |
-              kubernetes_pod_name pod
-              kubernetes_namespace_name namespace
-              kubernetes_container_name container
+                Labels            job=fluent-bit,namespace=$k8s_namespace_name,container=$k8s_container_name,pod=$k8s_pod_name
+                RemoveKeys        k8s_host,k8s_docker_id,k8s_pod_id,k8s_pod_ip,k8s_container_hash,k8s_container_image,k8s_labels
+                LineFormat        json
+          extraFiles: {}
         rbac:
           create: true
           nodeAccess: true
