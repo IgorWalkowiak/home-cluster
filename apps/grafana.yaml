@@ -9,6 +9,16 @@ spec:
     repoURL: registry-1.docker.io/bitnamicharts
     chart: grafana
     targetRevision: 12.0.8
+    helm:
+      values: |
+        grafana:
+          resources:
+            limits:
+              cpu: "4000m"
+              memory: "4Gi"
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
   destination:
     server: https://kubernetes.default.svc
     namespace: admin
