@@ -12,8 +12,6 @@ spec:
     helm:
       values: |
         executor: LocalExecutor
-        redis:
-          enabled: false
         postgresql:
           enabled: false
         externalDatabase:
