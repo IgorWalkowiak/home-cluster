@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: airflow
+  namespace: admin
+spec:
+  project: default
+  source:
+    repoURL: registry-1.docker.io/bitnamicharts
+    chart: airflow
+    targetRevision: 24.2.0
+    helm:
+      values: |
+        executor: LocalExecutor
+        postgresql:
+          enabled: false
+        externalDatabase:
+          host: k8s.local
+          port: 30001
+          user: postgres
+          database: postgres
+          existingSecret: postgresql-secret
+          existingSecretPasswordKey: password
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: admin
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
