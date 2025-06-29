@@ -21,6 +21,12 @@ spec:
           database: postgres
           existingSecret: postgresql-secret
           existingSecretPasswordKey: password
+        createUserJob:
+          useHelmHooks: false
+          applyCustomEnv: false
+        migrateDatabaseJob:
+          useHelmHooks: false
+          applyCustomEnv: false
   destination:
     server: https://kubernetes.default.svc
     namespace: admin
