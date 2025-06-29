@@ -9,6 +9,11 @@ spec:
     repoURL: registry-1.docker.io/bitnamicharts
     chart: airflow
     targetRevision: 24.2.0
+    helm:
+      values: |
+        executor: LocalExecutor
+        redis:
+          enabled: false
   destination:
     server: https://kubernetes.default.svc
     namespace: admin
